@@ -1,48 +1,35 @@
 # Apple Music API Consumer
 A React SPA for consuming the Apple Music API
 
-# Getting Started with Create React App
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Scenario
 
-## Available Scripts
+Write an SPA that contains a search field, and a list of five elements underneath. It should look roughly
+like this:
 
-In the project directory, you can run:
+Per default the list should show A, B, C, D, E.
 
-### `npm start`
+Every second the elements should rotate by one position:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+B C D E A
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+C D E A B
 
-### `npm test`
+D E A B C
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When the user types into the search field, query the apple music API like this: https://itunes.apple.com/search?term=radiohead. 
 
-### `npm run build`
+The output contains a list with songs. Each song
+has a property "collectionName" (the album). Sort all albums alphabetically and take the first five. E.g.
+“A Moon Shaped Pool“, „In Rainbows“, “Kid A”, “OK Computer”, “Pablo Honey”.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The list should keep rotating with a 1 second interval and the new albums should be added from bottom
+to top:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Items from previous searches should not appear again, but only the current search term items should be
+rotated.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Running from Docker
 
-### `npm run eject`
+docker build -t davidzambo/apple-music-api-consumer .
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+docker run -itd -p 8080:80 davidzambo/apple-music-api-consumer
